@@ -13,3 +13,18 @@ todoList.address
 todoList.taskCount()
 taskCount = await todoList.taskCount()
 taskCount.toNumber()
+
+
+truffle migrate --reset
+truffle console
+todoList = await TodoList.deployed()
+task = await todoList.tasks(1)
+task
+task.id.toNumber()
+task.content
+
+
+npm run dev
+
+touch TodoList.test.js
+truffle test
