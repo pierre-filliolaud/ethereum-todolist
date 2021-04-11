@@ -28,3 +28,5 @@ npm run dev
 
 touch TodoList.test.js
 truffle test
+
+truffle migrate --reset
