@@ -21,3 +21,10 @@ Make sure to connect the account to metamask and metamask account to localhost s
 
 # Browser
 Go to http://localhost:3000
+
+# Check SmartContract balance
+```
+truffle console
+todoList = await TodoList.deployed()
+web3.eth.getBalance(todoList.address, console.log)
+```
