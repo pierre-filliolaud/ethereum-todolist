@@ -92,10 +92,13 @@ App = {
         const taskId = task[0].toNumber()
         const taskContent = task[1]
         const taskCompleted = task[2]
+        const taskAmount = web3.fromWei(task[3].toNumber(),'ether')
+        console.log('TaskAmount: '+taskAmount)
   
         // Create the html for the task
         const $newTaskTemplate = $taskTemplate.clone()
         $newTaskTemplate.find('.content').html(taskContent)
+        $newTaskTemplate.find('.amount').html(taskAmount)
         $newTaskTemplate.find('input')
                         .prop('name', taskId)
                         .prop('checked', taskCompleted)
@@ -116,7 +119,9 @@ App = {
     createTask: async () => {
       App.setLoading(true)
       const content = $('#newTask').val()
-      await App.todoList.createTask(content)
+      var etherAmount = web3.toBigNumber($("#paidAmount").val());
+      var weiValue = web3.toWei(etherAmount,'ether');
+      await App.todoList.createPaidTask(content, {from: web3.eth.accounts[0], value: weiValue})
       window.location.reload()
     },
   

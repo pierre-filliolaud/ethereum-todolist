@@ -8,6 +8,7 @@ contract TodoList {
         uint id;
         string content;
         bool completed;
+        uint paidAmount;
     }
 
     mapping(uint => Task) public tasks;
@@ -15,7 +16,8 @@ contract TodoList {
     event TaskCreated(
         uint id,
         string content,
-        bool completed
+        bool completed,
+        uint paidAmount
     );
 
     event TaskCompleted(
@@ -29,8 +31,16 @@ contract TodoList {
 
     function createTask(string memory _content) public {
         taskCount ++;
-        tasks[taskCount] = Task(taskCount, _content, false);
-        emit TaskCreated(taskCount, _content, false);
+        tasks[taskCount] = Task(taskCount, _content, false, 0);
+        emit TaskCreated(taskCount, _content, false, 0);
+    }
+
+    // All ethers sent to payable functions are owned by contract.
+    function createPaidTask(string memory _content) public payable {
+        taskCount ++;
+        uint amount = msg.value;
+        tasks[taskCount] = Task(taskCount, _content, false, amount);
+        emit TaskCreated(taskCount, _content, false, amount);
     }
 
     function toggleCompleted(uint _id) public {
