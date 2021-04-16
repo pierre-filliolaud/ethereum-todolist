@@ -46,7 +46,7 @@ App = {
       // Set the current blockchain account
       App.account = web3.eth.accounts[0]
       web3.eth.defaultAccount = web3.eth.accounts[0]
-      console.log(App.account)
+      console.log('Account used: '+App.account)
     },
   
     loadContract: async () => {
@@ -57,6 +57,7 @@ App = {
   
       // Hydrate the smart contract with values from the blockchain
       App.todoList = await App.contracts.TodoList.deployed()
+      console.log("SmartContract used: "+App.todoList.address)
     },
   
     render: async () => {
@@ -70,6 +71,7 @@ App = {
   
       // Render Account
       $('#account').html(App.account)
+      $('#contract').html(App.todoList.address)
   
       // Render Tasks
       await App.renderTasks()
